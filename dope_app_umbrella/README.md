@@ -1,4 +1,0 @@
-# DopeAppUmbrella
-
-**TODO: Add description**
-
