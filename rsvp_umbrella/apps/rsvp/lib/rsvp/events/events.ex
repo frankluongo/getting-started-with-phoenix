@@ -4,7 +4,7 @@ defmodule Rsvp.Events do
   schema "events" do
     field :title, :string
     field :location, :string
-    field :date, DateTime
+    field :date, :naive_datetime
 
     timestamps()
   end
