@@ -52,3 +52,7 @@ This will live at localhost:4000
 run your app inside IEx (Interactive Elixir) as:
 `iex -S mix phx.server`
 
+# Ecto Models & Migrations
+
+## Creating a Database Table
+mix ecto.gen.migration add_events_table
