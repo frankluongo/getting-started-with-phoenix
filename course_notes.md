@@ -58,3 +58,7 @@ run your app inside IEx (Interactive Elixir) as:
 mix ecto.gen.migration add_events_table
 
 You can define up or down functions OR a change function for a migration
+
+## Retrieving Data
+`iex -S mix` to run the app in the terminal
+`r(App.FunctionName)` to reload function
