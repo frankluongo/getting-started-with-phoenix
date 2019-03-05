@@ -62,3 +62,7 @@ You can define up or down functions OR a change function for a migration
 ## Retrieving Data
 `iex -S mix` to run the app in the terminal
 `r(App.FunctionName)` to reload function
+
+## Adding a record
+
+`Rsvp.Events.changeset(%Rsvp.Events{}, %{date: "2016-11-22 00:00:00", title: "test"})`

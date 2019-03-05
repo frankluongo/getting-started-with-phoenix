@@ -18,4 +18,8 @@ defmodule Rsvp.EventQueries do
     Repo.get(Events, id)
   end
 
+  def create(event) do
+    Repo.insert!(event)
+  end
+
 end
