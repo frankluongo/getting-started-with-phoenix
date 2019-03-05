@@ -5,6 +5,7 @@ defmodule Rsvp.Events do
     field :title, :string
     field :location, :string
     field :date, :naive_datetime
+    field :description, :string
 
     timestamps()
   end
