@@ -1,4 +1,4 @@
-defmodule Rsvp.Repo.Migrations.AddEventsTable do
+defmodule Rsvp.Repo.Migrations.AddDescriptionToEvent do
   use Ecto.Migration
 
   def change do
