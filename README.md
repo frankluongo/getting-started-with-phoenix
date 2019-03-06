@@ -72,3 +72,7 @@ You can define up or down functions OR a change function for a migration
 
 # Controllers and Views
 -------------------------------------------------------------------------------
+
+## Creating a View
+Elixir/Phoenix know where to look for views and templates based on the name of the item.
+- event_controller looks for event_view which looks for a folder named event to find files
