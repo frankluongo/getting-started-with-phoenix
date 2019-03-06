@@ -53,6 +53,7 @@ run your app inside IEx (Interactive Elixir) as:
 `iex -S mix phx.server`
 
 # Ecto Models & Migrations
+-------------------------------------------------------------------------------
 
 ## Creating a Database Table
 mix ecto.gen.migration add_events_table
@@ -66,3 +67,8 @@ You can define up or down functions OR a change function for a migration
 ## Adding a record
 
 `Rsvp.Events.changeset(%Rsvp.Events{}, %{date: "2016-11-22 00:00:00", title: "test"})`
+
+
+
+# Controllers and Views
+-------------------------------------------------------------------------------

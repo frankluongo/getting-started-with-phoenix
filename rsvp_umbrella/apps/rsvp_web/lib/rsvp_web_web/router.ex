@@ -16,7 +16,10 @@ defmodule RsvpWebWeb.Router do
   scope "/", RsvpWebWeb do
     pipe_through :browser
 
+    # http verb "route", ControllerForTheRequest, :the_action_called
+
     get "/", PageController, :index
+    get "/events/:id", EventController, :show
   end
 
   # Other scopes may use custom stacks.
