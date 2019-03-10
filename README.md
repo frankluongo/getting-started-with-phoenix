@@ -1,7 +1,7 @@
 # Getting Started with Phoenix
 Pluralsight | Nate Taylor
 
-**NOTE:** This course came out in 2016. I am doing it using the most current versions of Elixir and Phoenix. Therefore, some of the code in my application differs from the tutorial on pluralsight
+**NOTE:** This course came out in 2016. I am doing it using the most current versions of Elixir and Phoenix as of March 2019. Therefore, some of the code in my application differs from the tutorial on pluralsight
 
 ## 1: Course Overview
 - We're building an event tracking application
@@ -18,7 +18,7 @@ Pluralsight | Nate Taylor
 
 
 ### 2-2: Components of Phoenix
-- Controller -> Model -> View -> Template
+- Standard MVC Application Builder
 - Other Components
   - Plugs
     - Allows you to interact with the conn
@@ -30,37 +30,25 @@ Pluralsight | Nate Taylor
   - PostgreSQL
 
 ### 2-3: Umbrella Application
+- Below are all the commands you need to get started (once you have the prerequisite files)
+```bash
+# Create a new umbrella application
+mix new application_name_umbrella --umbrella
 
-- `mix help` => Provides help
-- `mix phx.new` => new Phoenix Project
-- `mix phx.new.web` => new Phoenix Project within an Umbrella Application
+# move into the apps folder of the application and run this to create a supervisor for your applications
+mix new app_name --sup
 
-*Useful Commands:*
-`mix new application_name_umbrella --umbrella`
+# Create your Phoenix App with this command
+mix phx.new app_name_web --no-ecto
+# --no-ecto will omit Ecto from your Phoenix App. Which we want because we want the Supervisor interacting with the database, not the Phoenix app directly
 
-Follow-up commands to create more stuff:
+# Start Your App at localhost:4000
+mix phx.server
+
+# Use IEX in your App
+iex -S mix phx.server
+
 ```
-cd dope_app_umbrella
-cd apps
-mix new my_app
-```
-`mix new dope --sup`
-
-`mix phx.new dope_web --no-ecto`
-- the `--no-ecto` will omit the Ecto Database wrapper
-
-Follow-up Commands:
-`cd dope_web`
-
-Start your Phoenix app with:
-`mix phx.server`
-This will live at localhost:4000
-
-run your app inside IEx (Interactive Elixir) as:
-`iex -S mix phx.server`
-
-### 2-4: Live Reloading
-- Phoenix Live Reloads with no added parts
 
 
 ----
