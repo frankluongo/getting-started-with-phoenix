@@ -12,4 +12,9 @@ defmodule RsvpWebWeb.EventController do
     # Text is a function. It renders out the text supplied as the second argument
     # text conn, "Events #{id}"
   end
+
+  def list(conn, _params) do
+    events = Rsvp.EventQueries.get_all
+    render(conn, "list.html", events: events)
+  end
 end

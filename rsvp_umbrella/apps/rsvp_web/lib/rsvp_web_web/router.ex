@@ -19,6 +19,7 @@ defmodule RsvpWebWeb.Router do
     # http verb "route", ControllerForTheRequest, :the_action_called
 
     get "/", PageController, :index
+    get "/events", EventController, :list
     get "/events/:id", EventController, :show
   end
 
