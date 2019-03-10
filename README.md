@@ -1,6 +1,8 @@
 # Getting Started with Phoenix
 Pluralsight | Nate Taylor
 
+**NOTE:** This course came out in 2016. I am doing it using the most current versions of Elixir and Phoenix. Therefore, some of the code in my application differs from the tutorial on pluralsight
+
 ## 1: Course Overview
 - We're building an event tracking application
 
