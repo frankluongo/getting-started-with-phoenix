@@ -1,0 +1,7 @@
+<a href="<%= @event.id %>">
+  <div class="list-item">
+    <h4><%= @event.title %></h4>
+    <p><%= @event.location %></p>
+    <p><%= format_date(@event.date) %></p>
+  </div>
+</a>

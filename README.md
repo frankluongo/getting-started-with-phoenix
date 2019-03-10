@@ -131,10 +131,42 @@ get "/events", EventController, :list
 ```
 
 
-
-
-
 ### 5-3: Sub-Templates
+- I would refer to these as `partials` but Sub-Template is fine
+*NOTE:* I added the underscore to the beginning of the file names to indicate that it's a partial. This is not necessary but encouraged
+
+#### Partials Within a directory
+
+- In the `list.html.eex` file, replace the markup concerning each specific event and replace it with this line:
+```elixir
+  <%= render("_summary.html", event: e) %>
+```
+- Then create a `_summary.html.eex` file in the `events` folder and add this content
+```elixir
+<a href="<%= @event.id %>">
+  <div class="list-item">
+    <h4><%= @event.title %></h4>
+    <p><%= @event.location %></p>
+    <p><%= format_date(@event.date) %></p>
+  </div>
+</a>
+```
+
+#### Shared Partials
+
+- Create a new file called `shared_view.ex` and add this to it:
+```elixir
+defmodule RsvpWebWeb.SharedView do
+  use RsvpWebWeb, :view
+end
+```
+- Move the `_count.html.eex` file to a new folder in `templates` called `shared`
+- Rename `@events` to `@list` in the file
+- Update the render function in `list.html.eex` to say this:
+```elixir
+<%= render RsvpWebWeb.SharedView, "_count.html", list: @events %>
+```
+
 
 ### 5-4: Helpers
 

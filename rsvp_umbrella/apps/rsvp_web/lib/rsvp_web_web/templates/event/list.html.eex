@@ -1,12 +1,7 @@
 <h1>All Events</h1>
+<%= render RsvpWebWeb.SharedView, "_count.html", list: @events %>
 <ul class="list">
   <%= for e <- @events do %>
-    <a href="<%= e.id %>">
-      <div class="list-item">
-        <h4><%= e.title %></h4>
-        <p><%= e.location %></p>
-        <p><%= format_date(e.date) %></p>
-      </div>
-    </a>
+    <%= render("_summary.html", event: e) %>
   <% end %>
 </ul>
