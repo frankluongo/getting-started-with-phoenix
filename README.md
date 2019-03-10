@@ -4,45 +4,36 @@ Pluralsight | Nate Taylor
 ## 1: Course Overview
 - We're building an event tracking application
 
+
+----
+
+
 ## 2: What Is Phoenix
 
 ### 2-1: What Is Phoenix
+- Based on Elixir which is written in Erlang
+- Phoenix is NOT your application
+
 
 ### 2-2: Components of Phoenix
+- Controller -> Model -> View -> Template
+- Other Components
+  - Plugs
+    - Allows you to interact with the conn
+  - Channels
+    - Allows soft real-time communication
+- Prerequisites
+  - Elixir
+  - Node JS
+  - PostgreSQL
 
 ### 2-3: Umbrella Application
-
-### 2-4: Live Reloading
-
-### 2-5: What's On Tap
-
-## 3: Ecto Models & Migrations
-
-## 4: Controllers & Views: Fetching & Displaying Data
-
-
-## Miscellaneous Notes
-- Controller -> Model -> View -> Template
-
-### Other Components
-Plugs
-- Allows you to interact with the conn
-
-Channels
-- Allows soft real-time communication
-
-### Prerequisities
-- Elixir
-- Node JS
-- PostgreSQL
-
-### Getting Started
 
 - `mix help` => Provides help
 - `mix phx.new` => new Phoenix Project
 - `mix phx.new.web` => new Phoenix Project within an Umbrella Application
 
-#### Create an Umbrella Application:
+*Useful Commands:*
 `mix new application_name_umbrella --umbrella`
 
 Follow-up commands to create more stuff:
@@ -51,16 +42,8 @@ cd dope_app_umbrella
 cd apps
 mix new my_app
 ```
-#### Create a Supervising App
 `mix new dope --sup`
 
-Follow-up commands to use this:
-```
-cd dope
-mix test
-```
-
-#### Create Your Phoenix App
 `mix phx.new dope_web --no-ecto`
 - the `--no-ecto` will omit the Ecto Database wrapper
 
@@ -74,7 +57,14 @@ This will live at localhost:4000
 run your app inside IEx (Interactive Elixir) as:
 `iex -S mix phx.server`
 
-## Ecto Models & Migrations
+### 2-4: Live Reloading
+- Phoenix Live Reloads with no added parts
+
+
+----
+
+
+## 3: Ecto Models & Migrations
 
 ### Creating a Database Table
 mix ecto.gen.migration add_events_table
@@ -90,8 +80,10 @@ You can define up or down functions OR a change function for a migration
 `Rsvp.Events.changeset(%Rsvp.Events{}, %{date: "2016-11-22 00:00:00", title: "test"})`
 
 
+----
 
-## Controllers and Views
+
+## 4: Controllers and Views
 
 ## Creating a View
 Elixir/Phoenix know where to look for views and templates based on the name of the item.
@@ -145,3 +137,50 @@ get "/events", EventController, :list
 ### 5-3: Sub-Templates
 
 ### 5-4: Helpers
+
+
+----
+
+
+## 6: Putting It Together: Creating an Event
+
+### 6-1: Putting It Together
+
+### 6-2: Creating The Form
+
+### 6-3: Handling User Submitted Data
+
+### 6-4: Handling Form Errors
+
+
+----
+
+
+## 7: Plugs
+
+### 7-1: What is a Plug
+
+### 7-2: Creating a Cookie
+
+### 7-3: Creating a Plug
+
+### 7-4: Passing a Parameter
+
+
+----
+
+
+## 8: Channels: Real-Time Communication
+
+### 8-1: Channels: Real-Time Communication
+
+----
+
+
+## 9: Deployment
+
+
+----
+
+
+## 10: Recap & Where to Go
