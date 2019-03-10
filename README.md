@@ -12,12 +12,12 @@ Pluralsight | Nate Taylor
 
 ## 2: What Is Phoenix
 
-### 2-1: What Is Phoenix
+### 2.1: What Is Phoenix
 - Based on Elixir which is written in Erlang
 - Phoenix is NOT your application
 
 
-### 2-2: Components of Phoenix
+### 2.2: Components of Phoenix
 - Standard MVC Application Builder
 - Other Components
   - Plugs
@@ -29,7 +29,7 @@ Pluralsight | Nate Taylor
   - Node JS
   - PostgreSQL
 
-### 2-3: Umbrella Application
+### 2.3: Umbrella Application
 - Below are all the commands you need to get started (once you have the prerequisite files)
 ```bash
 # Create a new umbrella application
@@ -56,18 +56,33 @@ iex -S mix phx.server
 
 ## 3: Ecto Models & Migrations
 
-### Creating a Database Table
+### 3.1: What Is a Model
+
+### 3.2: Installing Ecto
+
+### 3.3: Create a Model
+
+### 3.4: Creating a Database Table
+- Create a Migration
+```bash
 mix ecto.gen.migration add_events_table
+```
+**NOTE:** You can define `up` or `down` functions *OR* a `change` function for a migration
 
-You can define up or down functions OR a change function for a migration
+### 3.5: Retrieving Data
+- Here's a quick way to reload functions for testing them:
 
-### Retrieving Data
-`iex -S mix` to run the app in the terminal
-`r(App.FunctionName)` to reload function
+```iex
+r(App.FunctionName)` to reload function
+```
 
-### Adding a record
+### 3.6: Adding a Record
+- Here's an example of an event to add to your database
+```iex
+Rsvp.Events.changeset(%Rsvp.Events{}, %{date: "2016-11-22 00:00:00", title: "test"})
+```
 
-`Rsvp.Events.changeset(%Rsvp.Events{}, %{date: "2016-11-22 00:00:00", title: "test"})`
+### 3.7: Seeding The Database
 
 
 ----
@@ -75,9 +90,16 @@ You can define up or down functions OR a change function for a migration
 
 ## 4: Controllers and Views
 
-## Creating a View
-Elixir/Phoenix know where to look for views and templates based on the name of the item.
-- event_controller looks for event_view which looks for a folder named event to find files
+### 4.1: Fetching & Displaying Data
+### 4.2: Creating an Event Route
+### 4.3: Creating a Controller
+### 4.4: Creating The Show Function
+### 4.5: Creating a View
+**NOTE:** Elixir/Phoenix know where to look for views and templates based on the name of the item.
+- `event_controller` looks for `event_view` which looks for a folder named `event` to find files
+
+### 4.6: Supplying Data To A View
+### 4.7: Testing The View
 
 
 ----
@@ -85,10 +107,10 @@ Elixir/Phoenix know where to look for views and templates based on the name of t
 
 ## 5: Templates: Laying Out The View
 
-### 5-1: Templates: Layout Out The View
+### 5.1: Templates: Layout Out The View
 - Templates are rendered using data from the view
 
-### 5-2: Listing Events
+### 5.2: Listing Events
 - Create a page that lists all of our events
 
 - In the `router.ex` file, define a new action that routes to the event controller and will handle showing the list
@@ -121,7 +143,7 @@ get "/events", EventController, :list
 ```
 
 
-### 5-3: Sub-Templates
+### 5.3: Sub-Templates
 - I would refer to these as `partials` but Sub-Template is fine
 *NOTE:* I added the underscore to the beginning of the file names to indicate that it's a partial. This is not necessary but encouraged
 
@@ -158,7 +180,7 @@ end
 ```
 
 
-### 5-4: Helpers
+### 5.4: Helpers
 
 
 ----
@@ -166,13 +188,10 @@ end
 
 ## 6: Putting It Together: Creating an Event
 
-### 6-1: Putting It Together
-
-### 6-2: Creating The Form
-
-### 6-3: Handling User Submitted Data
-
-### 6-4: Handling Form Errors
+### 6.1: Putting It Together
+### 6.2: Creating The Form
+### 6.3: Handling User Submitted Data
+### 6.4: Handling Form Errors
 
 
 ----
@@ -180,13 +199,10 @@ end
 
 ## 7: Plugs
 
-### 7-1: What is a Plug
-
-### 7-2: Creating a Cookie
-
-### 7-3: Creating a Plug
-
-### 7-4: Passing a Parameter
+### 7.1: What is a Plug
+### 7.2: Creating a Cookie
+### 7.3: Creating a Plug
+### 7.4: Passing a Parameter
 
 
 ----
@@ -194,15 +210,26 @@ end
 
 ## 8: Channels: Real-Time Communication
 
-### 8-1: Channels: Real-Time Communication
+### 8.1: Channels: Real-Time Communication
+### 8.2: Accepting Reservations
+### 8.3: Preparing For Channels
+### 8.4: Creating a Channel
+### 8.5: Consuming a Message
 
 ----
 
 
 ## 9: Deployment
 
+### 9.1: Deployment
+### 9.2: Creating The Heroku Application
+### 9.3: Configuring The Application
 
 ----
 
 
 ## 10: Recap & Where to Go
+
+### 10.1: Recap & Where to Go
+### 10.2: Learning Resources
+### 10.3: Extend The Application
