@@ -181,6 +181,39 @@ end
 
 
 ### 5.4: Helpers
+- Routing Helpers
+  - Simplify using routes on pages in your application
+- Template Helpers
+  - Simplify creating HTML elements
+
+
+**Routing Helpers**
+- Make sure to use `Routes` when specifying a route helper
+- They rely on the name of a controller to populate, i.e. `event_controller` => `event_path`
+
+Example:
+```elixir
+<%= Routes.event_path(@conn, :show, @event.id) %>
+```
+
+**Template Helpers**
+- These are very useful for form elements
+
+Example 1: This will create a standard `href` tag
+```elixir
+<%= link("Text", to: "https://google.com") %>
+```
+
+Example 2: This will create a form with a post method
+```elixir
+<%= link("Text", to: "https://google.com", method: :post) %>
+```
+
+Example 3: Form Input
+```elixir
+<%= number_input, f, :number, min: 10 %>
+```
+Set the type to `number_input`, `f` is the form that the element is a part of, `:number` is the identifier for the field, `min: 10` is a list of options
 
 
 ----

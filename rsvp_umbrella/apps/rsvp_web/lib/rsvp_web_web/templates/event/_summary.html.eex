@@ -1,4 +1,4 @@
-<a href="<%= @event.id %>">
+<a href="<%= Routes.event_path(@conn, :show, @event.id) %>">
   <div class="list-item">
     <h4><%= @event.title %></h4>
     <p><%= @event.location %></p>

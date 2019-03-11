@@ -2,6 +2,6 @@
 <%= render RsvpWebWeb.SharedView, "_count.html", list: @events %>
 <ul class="list">
   <%= for e <- @events do %>
-    <%= render("_summary.html", event: e) %>
+    <%= render("_summary.html", event: e, conn: @conn) %>
   <% end %>
 </ul>
