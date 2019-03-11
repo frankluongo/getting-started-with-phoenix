@@ -221,8 +221,55 @@ Set the type to `number_input`, `f` is the form that the element is a part of, `
 
 ## 6: Putting It Together: Creating an Event
 
-### 6.1: Putting It Together
 ### 6.2: Creating The Form
+- Create a Route for the form in `router.ex`, as well as a route for adding a new event
+  - Make sure to place this line above the `/events/:id` one
+```elixir
+get "/events/new", EventController, :create
+post "/events/new", EventController. :add
+```
+
+- Add the `:create` and `:add` functions in `event_controller.ex`
+```elixir
+def create(conn, _params) do
+  render(conn, "create.html")
+end
+
+def add(conn, _params) do
+
+end
+```
+
+- Create a `create.html.eex` file in the `events` folder and add this form:
+```elixir
+<%= form_for @changeset, Routes.event_path(@conn, :add), fn f -> %>
+  <div class="form-control">
+    <%= label f, :title, "Event Title" %>
+    <%= text_input f, :title, class: "form-control" %>
+  </div>
+  <div class="form-control">
+    <%= label f, :location, "Event Location" %>
+    <%= text_input f, :location, class: "form-control" %>
+  </div>
+  <div class="form-control">
+    <%= label f, :date, "Event Date" %>
+    <%= text_input f, :date, class: "form-control", type: "datetime-local" %>
+  </div>
+
+  <div class="form-control">
+    <%= label f, :description, "Event Description" %>
+    <%= textarea f, :description, class: "form-control", rows: 5 %>
+  </div>
+
+  <%= submit "Add Event", class: "button" %>
+<% end %>
+```
+
+- Add `phoenix_ecto` to the `mix.exs` file's list of dependencies
+```elixir
+{:phoenix_ecto, "~> 4.0"},
+```
+
 ### 6.3: Handling User Submitted Data
 ### 6.4: Handling Form Errors
 

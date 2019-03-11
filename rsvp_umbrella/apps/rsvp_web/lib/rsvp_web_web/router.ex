@@ -20,6 +20,9 @@ defmodule RsvpWebWeb.Router do
 
     get "/", PageController, :index
     get "/events", EventController, :list
+    get "/events/new", EventController, :create
+    post "/events/new", EventController, :add
+    # Keep events/:id the bottom so Elixir doesn't accidentally match on this when looking for /new
     get "/events/:id", EventController, :show
   end
 

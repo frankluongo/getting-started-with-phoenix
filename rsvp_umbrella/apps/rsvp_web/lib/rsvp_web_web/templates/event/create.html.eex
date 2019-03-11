@@ -1,0 +1,23 @@
+<h1>Add Event</h1>
+
+<%= form_for @changeset, Routes.event_path(@conn, :add), fn f -> %>
+  <div class="form-control">
+    <%= label f, :title, "Event Title" %>
+    <%= text_input f, :title, class: "form-control" %>
+  </div>
+  <div class="form-control">
+    <%= label f, :location, "Event Location" %>
+    <%= text_input f, :location, class: "form-control" %>
+  </div>
+  <div class="form-control">
+    <%= label f, :date, "Event Date" %>
+    <%= text_input f, :date, class: "form-control", type: "datetime-local" %>
+  </div>
+
+  <div class="form-control">
+    <%= label f, :description, "Event Description" %>
+    <%= textarea f, :description, class: "form-control", rows: 5 %>
+  </div>
+
+  <%= submit "Add Event", class: "button" %>
+<% end %>
