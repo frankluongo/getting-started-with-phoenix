@@ -23,7 +23,20 @@ defmodule RsvpWebWeb.EventController do
     render(conn, "list.html", events: events)
   end
 
-  def add(conn, _params) do
+  def add(conn, %{"events" => events}) do
+    naive_event_date = convert_date(events["date"])
+    events = Map.replace!(events, "date", naive_event_date)
 
+    %{id: id} = Rsvp.Events.changeset(%Rsvp.Events{}, events)
+    |> Rsvp.EventQueries.create
+
+    redirect(conn, to: Routes.event_path(conn, :show, id))
+  end
+
+  def convert_date(date) do
+    {_, new_date} = date <> ":00" |> NaiveDateTime.from_iso8601()
+    new_date
   end
 end
+
+# NaiveDateTime.from_iso8601("2019-04-01T12:00:00")

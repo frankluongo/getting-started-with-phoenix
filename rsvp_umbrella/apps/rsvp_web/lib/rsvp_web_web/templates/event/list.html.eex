@@ -1,4 +1,5 @@
 <h1>All Events</h1>
+<%= link("Create New Event", to: Routes.event_path(@conn, :create)) %>
 <%= render RsvpWebWeb.SharedView, "_count.html", list: @events %>
 <ul class="list">
   <%= for e <- @events do %>

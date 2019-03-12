@@ -1,3 +1,7 @@
 <h1><%= @event.title %></h1>
 <h2><%= format_date(@event.date) %></h2>
 <h3><%= @event.location %></h3>
+<p><%= @event.description %></p>
+
+
+<%= link("Create New Event", to: Routes.event_path(@conn, :create)) %>

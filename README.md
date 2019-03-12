@@ -271,6 +271,36 @@ end
 ```
 
 ### 6.3: Handling User Submitted Data
+- Temporary Solution: Redirect the user
+This is in the `event_controller.ex`
+```elixir
+def add(conn, _params) do
+  redirect(conn, to: Routes.event_path(conn, :list))
+end
+```
+
+- When ready, we add the new event to our list with this:
+  - Convert our date
+  - Destructure the new ID from the events changeset
+  - Redirect to the new event page
+```elixir
+  def add(conn, %{"events" => events}) do
+    naive_event_date = convert_date(events["date"])
+    events = Map.replace!(events, "date", naive_event_date)
+
+    %{id: id} = Rsvp.Events.changeset(%Rsvp.Events{}, events)
+    |> Rsvp.EventQueries.create
+
+    redirect(conn, to: Routes.event_path(conn, :show, id))
+  end
+
+  def convert_date(date) do
+    {_, new_date} = date <> ":00" |> NaiveDateTime.from_iso8601()
+    new_date
+  end
+```
+**NOTE:** Because I'm doing this course in 2019 and the original course is expecting you to use an outdated date format, I had to make some modifications to get `naive_datetime` working. The `convert_date` function adds seconds to the `local-datetime` supplied by the form, converts it to a Naive DateTime and returns that back. Once we have that, we replace the date in the event map before passing it into the changeset.
+
 ### 6.4: Handling Form Errors
 
 
