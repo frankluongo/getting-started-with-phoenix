@@ -302,7 +302,40 @@ end
 **NOTE:** Because I'm doing this course in 2019 and the original course is expecting you to use an outdated date format, I had to make some modifications to get `naive_datetime` working. The `convert_date` function adds seconds to the `local-datetime` supplied by the form, converts it to a Naive DateTime and returns that back. Once we have that, we replace the date in the event map before passing it into the changeset.
 
 ### 6.4: Handling Form Errors
+- First, we change `insert!` to `insert` in `event_queries.ex`
+```elixir
+def create(event) do
+  Repo.insert(event)
+end
+```
 
+- Next, we change the `add` function in the `event_controller.ex`
+```elixir
+changeset = Rsvp.Events.changeset(%Rsvp.Events{}, events)
+
+case Rsvp.EventQueries.create(changeset) do
+  {:ok, %{id: id}} -> redirect(conn, to: Routes.event_path(conn, :show, id))
+  {:error, reasons} -> create(conn, %{errors: reasons}) # Here, we call the create function again, passing it the errors
+end
+```
+
+- After that, we change add another `create` function above our first one to handle errors
+```elixir
+def create(conn, %{errors: errors}) do
+  render(conn, "create.html", changeset: errors)
+end
+```
+
+- Then, we add error tag helpers to our form in `create.html.eex`
+```eex
+<div class="form-control">
+  <%= label f, :title, "Event Title" %>
+  <%= text_input f, :title, class: "form-control" %>
+  <%= error_tag f, :title %>
+</div>
+```
+
+**NOTE:** When you change `event_queries`, restart your application for the change to take effect
 
 ----
 

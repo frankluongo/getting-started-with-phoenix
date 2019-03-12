@@ -4,14 +4,17 @@
   <div class="form-control">
     <%= label f, :title, "Event Title" %>
     <%= text_input f, :title, class: "form-control" %>
+    <%= error_tag f, :title %>
   </div>
   <div class="form-control">
     <%= label f, :location, "Event Location" %>
     <%= text_input f, :location, class: "form-control" %>
+    <%= error_tag f, :location %>
   </div>
   <div class="form-control">
     <%= label f, :date, "Event Date" %>
     <%= text_input f, :date, class: "form-control", type: "datetime-local" %>
+    <%= error_tag f, :date %>
   </div>
 
   <div class="form-control">

@@ -13,6 +13,10 @@ defmodule RsvpWebWeb.EventController do
     # text conn, "Events #{id}"
   end
 
+  def create(conn, %{errors: errors}) do
+    render(conn, "create.html", changeset: errors)
+  end
+
   def create(conn, _params) do
     changeset = Rsvp.Events.changeset(%Rsvp.Events{}, %{})
     render(conn, "create.html", changeset: changeset)
@@ -27,10 +31,12 @@ defmodule RsvpWebWeb.EventController do
     naive_event_date = convert_date(events["date"])
     events = Map.replace!(events, "date", naive_event_date)
 
-    %{id: id} = Rsvp.Events.changeset(%Rsvp.Events{}, events)
-    |> Rsvp.EventQueries.create
+    changeset = Rsvp.Events.changeset(%Rsvp.Events{}, events)
 
-    redirect(conn, to: Routes.event_path(conn, :show, id))
+    case Rsvp.EventQueries.create(changeset) do
+      {:ok, %{id: id}} -> redirect(conn, to: Routes.event_path(conn, :show, id))
+      {:error, reasons} -> create(conn, %{errors: reasons}) # Here, we call the create function again, passing it the errors
+    end
   end
 
   def convert_date(date) do
