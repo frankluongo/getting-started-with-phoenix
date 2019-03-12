@@ -16,13 +16,23 @@
           </ul>
         </nav>
         <a href="http://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+          <!-- <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/> -->
         </a>
+        <ul>
+          <li><%= link("Home", to: Routes.page_path(@conn, :index))%></li>
+          <li><%= link("Events", to: Routes.event_path(@conn, :list))%></li>
+          <li><%= link("Login", to: Routes.login_path(@conn, :index))%></li>
+        </ul>
       </section>
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= if @conn.cookies["user_name"] do %>
+        <span>
+          Hello, <%= @conn.cookies["user_name"] %>!
+        </span>
+      <% end %>
       <%= render @view_module, @view_template, assigns %>
     </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>

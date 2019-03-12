@@ -352,6 +352,66 @@ end
     - Implements two functions, `call/2` and `init/1`
 
 ### 7.2: Creating a Cookie
+We need to create a way for users to log in to the site
+
+- First, we add two new routes to the `router.ex`
+```elixir
+get "/login", LoginController, :index
+post "/login", LoginController, :login
+```
+
+- Next, we create a new controller, `login_controller.ex`
+```elixir
+defmodule RsvpWebWeb.LoginController do
+  use RsvpWebWeb, :controller
+
+  def index(conn, _params) do
+    render(conn, "login.html")
+  end
+
+  def login(conn, %{"login" => %{"username" => name}}) do
+    expiration = 60*60*24*7
+    conn
+    |> Plug.Conn.put_resp_cookie("user_name", name, max_age: expiration)
+    |> redirect(to: "/")
+  end
+end
+```
+
+- Then, we add a `login_view.ex` in the views folder
+```elixir
+defmodule RsvpWebWeb.LoginView do
+  use RsvpWebWeb, :view
+end
+```
+
+- After that, create a `login` folder in `templates` and create a `login.html.eex` file where you add this:
+```elixir
+<%= form_for @conn, Routes.login_path(@conn, :login), [as: :login], fn f -> %>
+  <%= text_input f, :username %>
+  <%= submit "Login" %>
+<% end %>
+```
+
+- Add a navigation to your site
+```eex
+<ul>
+  <li><%= link("Home", to: Routes.page_path(@conn, :index))%></li>
+  <li><%= link("Events", to: Routes.event_path(@conn, :list))%></li>
+  <li><%= link("Login", to: Routes.login_path(@conn, :index))%></li>
+</ul>
+```
+
+- Show the cookie to someone who has a username
+```eex
+<%= if @conn.cookies["user_name"] do %>
+  <span>
+    Hello, <%= @conn.cookies["user_name"] %>!
+  </span>
+<% end %>
+```
+
+
 ### 7.3: Creating a Plug
 ### 7.4: Passing a Parameter
 
