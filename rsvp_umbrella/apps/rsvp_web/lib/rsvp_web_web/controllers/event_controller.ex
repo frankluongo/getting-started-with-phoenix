@@ -2,7 +2,7 @@ defmodule RsvpWebWeb.EventController do
   # Phoenix gives you this :controller option to help you build controllers
   use RsvpWebWeb, :controller
 
-  plug RsvpWeb.AuthorizedPlug when action in [:create]
+  plug RsvpWeb.AuthorizedPlug, "create" when action in [:create]
 
   # All of these functions require two parameters, the connection and params sent along from the router
   def show(conn, %{"id" => id}) do

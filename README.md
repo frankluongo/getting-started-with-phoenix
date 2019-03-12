@@ -469,6 +469,32 @@ plug RsvpWeb.AuthorizedPlug when action in [:create]
 
 
 ### 7.4: Passing a Parameter
+- Plugs are used to place information into cookies, the session, or a header
+- They can be accessed in pipeline, a controller or specific actions in a controller
+
+- First, we add a guard to make sure our `user_name` matches a specific name in `authorized_plug.ex`
+```elixir
+def call(conn, name) do
+  user_name = conn.cookies["user_name"]
+  authorize_user(conn, user_name, name)
+end
+
+defp authorize_user(conn, nil, _) do
+  conn
+  |> redirect(to: "/login")
+  |> halt
+end
+
+defp authorize_user(conn, user_name, name) when user_name === name do
+  conn
+end
+
+defp authorize_user(conn, _, _), do: authorize_user(conn, nil, nil)
+```
+- Then we add our desired name to the Plug call in `event_controller.ex`
+```elixir
+plug RsvpWeb.AuthorizedPlug, "create" when action in [:create]
+```
 
 
 ----
