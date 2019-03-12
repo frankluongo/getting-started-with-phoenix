@@ -413,6 +413,61 @@ end
 
 
 ### 7.3: Creating a Plug
+- We create a plug! It will be named `authorized_plug.ex` and live in the `lib` folder
+  - This will be a module plug, that gets passed a username and then checks to see if there is a username defined. If so, then they will be able to continue, if not, they will be prompted to login
+```elixir
+defmodule RsvpWeb.AuthorizedPlug do
+  import Plug.Conn
+  import Phoenix.Controller
+
+  def init(opts) do
+    opts
+  end
+
+  def call(conn, _) do
+    user_name = conn.cookies["user_name"]
+    authorize_user(conn, user_name)
+  end
+
+  defp authorize_user(conn, nil) do
+    conn
+    |> redirect(to: "/login")
+    |> halt
+  end
+
+  defp authorize_user(conn, _) do
+    conn
+  end
+end
+```
+
+- With our Plug created, we can add it to the `router.ex` file
+  - One option is to add it as its own pipeline and scope some routes to it
+```elixir
+pipeline :authorized do
+  plug :browser
+  plug RsvpWeb.AuthorizedPlug
+end
+
+...
+
+scope "/events", RsvpWebWeb do
+  pipe_through :authorized
+
+  get "/", EventController, :list
+  get "/new", EventController, :create
+  post "/new", EventController, :add
+  # Keep/:id the bottom so Elixir doesn't accidentally match on this when looking for /new
+  get "/:id", EventController, :show
+end
+```
+
+- The better solution, however, is to only call the plug when we need it using the `event_controller.ex` file
+```elixir
+plug RsvpWeb.AuthorizedPlug when action in [:create]
+```
+
+
 ### 7.4: Passing a Parameter
 
 
