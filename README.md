@@ -343,6 +343,14 @@ end
 ## 7: Plugs
 
 ### 7.1: What is a Plug
+*A Plug is a function that adds information to the connection.* A Plug is a specification for composable modules in between web applications. It is also an abstraction layer for connection of different web servers
+
+- 2 kinds of Plugs
+  - Function Plug
+    - Any function that takes two parameters and returns a connection struct
+  - Module Plug
+    - Implements two functions, `call/2` and `init/1`
+
 ### 7.2: Creating a Cookie
 ### 7.3: Creating a Plug
 ### 7.4: Passing a Parameter
