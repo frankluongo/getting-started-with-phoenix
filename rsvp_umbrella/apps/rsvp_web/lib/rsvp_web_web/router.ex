@@ -38,6 +38,7 @@ defmodule RsvpWebWeb.Router do
     post "/new", EventController, :add
     # Keep/:id the bottom so Elixir doesn't accidentally match on this when looking for /new
     get "/:id", EventController, :show
+    post "/:id/reserve", EventController, :reserve
   end
 
   # Other scopes may use custom stacks.

@@ -2,6 +2,18 @@
 <h2><%= format_date(@event.date) %></h2>
 <h3><%= @event.location %></h3>
 <p><%= @event.description %></p>
+<h4>
+  <span class="quantity"><%= @event.quantity_available %></span>
+</h4>
 
+
+<%= form_for @conn, Routes.event_path(@conn, :reserve, @event.id), [as: :reservation], fn f -> %>
+  <div class="form-group">
+    <%= label f, :quantity, "Quantity" %>
+    <%= number_input f, :quantity, min: 1 %>
+  </div>
+
+  <%= submit "Reserve" %>
+<% end %>
 
 <%= link("Create New Event", to: Routes.event_path(@conn, :create)) %>

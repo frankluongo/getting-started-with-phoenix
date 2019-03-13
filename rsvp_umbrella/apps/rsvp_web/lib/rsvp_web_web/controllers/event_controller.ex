@@ -45,6 +45,11 @@ defmodule RsvpWebWeb.EventController do
     {_, new_date} = date <> ":00" |> NaiveDateTime.from_iso8601()
     new_date
   end
+
+  def reserve(conn, %{"id" => id, "reservation" => %{"quantity" => quantity}}) do
+    Rsvp.EventQueries.decrease_quantity(id, quantity)
+    redirect(conn, to: Routes.event_path(conn, :show, id))
+  end
 end
 
 # NaiveDateTime.from_iso8601("2019-04-01T12:00:00")

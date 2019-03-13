@@ -532,6 +532,44 @@ channel "room:cats", RsvpWeb.CatChannel
 
 ### 8.2: Accepting Reservations
 
+Add a new field to the `events.ex` model schema
+```elixir
+field :quantity_available, :integer, default: 25
+```
+
+Run a Migration
+```bash
+mix ecto.gen.migration add_quantity_available
+```
+
+Add a change function to the newly created migration
+```elixir
+defmodule Rsvp.Repo.Migrations.AddQuantityAvailable do
+  use Ecto.Migration
+
+  def change do
+    alter table(:events) do
+      add :quantity_available, :integer, default: 25
+    end
+  end
+end
+```
+
+Run the migration
+```bash
+mix ecto.migrate
+```
+
+Add a function to `event_queries.ex`
+```elixir
+def decrease_quantity(id, quantity) do
+  event = Repo.get!(Events, id)
+  changes = Ecto.changeset.change event, quantity_available:
+  event.quantity_available - String.to_integer(quantity)
+  Repo.update changes
+end
+```
+
 
 ### 8.3: Preparing For Channels
 ### 8.4: Creating a Channel
