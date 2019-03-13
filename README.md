@@ -564,9 +564,39 @@ Add a function to `event_queries.ex`
 ```elixir
 def decrease_quantity(id, quantity) do
   event = Repo.get!(Events, id)
-  changes = Ecto.changeset.change event, quantity_available:
+  changes = Ecto.Changeset.change event, quantity_available:
   event.quantity_available - String.to_integer(quantity)
   Repo.update changes
+end
+```
+
+Add the quantity and this form to the Event Details:
+```eex
+<h4>
+  <span class="quantity"><%= @event.quantity_available %></span>
+</h4>
+
+
+<%= form_for @conn, Routes.event_path(@conn, :reserve, @event.id), [as: reservation], fn f -> %>
+  <div class="form-group">
+    <%= label f, :quantity, "Quantity" %>
+    <%= number_input f, :quantity, min: 1 %>
+  </div>
+
+  <%= submit "Reserve" %>
+<% end %>
+```
+
+Add this line to `router.ex`
+```elixir
+post "/:id/reserve", EventController, :reserve
+```
+
+Add this function in `event_controller.ex`:
+```elixir
+def reserve(conn, %{"id" => id, "reservation" => %{"quantity" => quantity}}) do
+  Rsvp.EventQueries.decrease_quantity(id, quantity)
+  redirect(conn, to: Routes.event_path(conn, :show, id))
 end
 ```
 
