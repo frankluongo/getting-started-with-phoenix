@@ -503,7 +503,36 @@ plug RsvpWeb.AuthorizedPlug, "create" when action in [:create]
 ## 8: Channels: Real-Time Communication
 
 ### 8.1: Channels: Real-Time Communication
+Channels are based soley on sending and receiving messages
+- Channels can have many receivers for messages
+- There can be various consumers as well
+
+Socket - Handles message dispatching
+
+These are placed in the socket module
+**Examples**
+```elixir
+channel "room:*", RsvpWeb.RoomChannel
+
+channel "room:dogs", RsvpWeb.DogChannel
+channel "room:cats", RsvpWeb.CatChannel
+```
+
+**Four Functions in Channels**
+`join/3`
+`terminate/2`
+`handle_in/3`
+`handle_out/3`
+
+**Broadcast Message**
+- Topic
+- Event
+- Payload
+
+
 ### 8.2: Accepting Reservations
+
+
 ### 8.3: Preparing For Channels
 ### 8.4: Creating a Channel
 ### 8.5: Consuming a Message
