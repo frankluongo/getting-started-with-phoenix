@@ -3,7 +3,7 @@
 <h3><%= @event.location %></h3>
 <p><%= @event.description %></p>
 <h4>
-  <span class="quantity"><%= @event.quantity_available %></span>
+  <span data-js="Event.Quantity" class="quantity"><%= @event.quantity_available %></span>
 </h4>
 
 

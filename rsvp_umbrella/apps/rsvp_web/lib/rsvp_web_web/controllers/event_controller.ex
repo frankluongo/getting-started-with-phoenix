@@ -47,7 +47,8 @@ defmodule RsvpWebWeb.EventController do
   end
 
   def reserve(conn, %{"id" => id, "reservation" => %{"quantity" => quantity}}) do
-    Rsvp.EventQueries.decrease_quantity(id, quantity)
+    {:ok, event} = Rsvp.EventQueries.decrease_quantity(id, quantity)
+    RsvpWebWeb.EventChannel.send_update(event)
     redirect(conn, to: Routes.event_path(conn, :show, id))
   end
 end

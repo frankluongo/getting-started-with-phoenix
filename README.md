@@ -662,6 +662,34 @@ Add an element that will provide an event id to the Javascript in `event/details
 
 ### 8.5: Consuming a Message
 
+Create a new function in your `event_channel.ex` file for sending the update
+```elixir
+def send_update(event) do
+  payload = %{"quantity" => event.quantity_available}
+  RsvpWebWeb.Endpoint.broadcast!("event:#{event.id}", "update_quantity", payload)
+end
+```
+
+Call that function from your `event_controller.ex` file
+```elixir
+def reserve(conn, %{"id" => id, "reservation" => %{"quantity" => quantity}}) do
+  {:ok, event} = Rsvp.EventQueries.decrease_quantity(id, quantity)
+  RsvpWebWeb.EventChannel.send_update(event)
+  redirect(conn, to: Routes.event_path(conn, :show, id))
+end
+```
+
+
+Observe the channel in your JavaScript and change the quantity amount as it updates
+```javascript
+observeChannel () {
+  this.channel.on("update_quantity", event => {
+    console.log(event);
+    this.quantity.innerText = event.quantity;
+  });
+}
+```
+
 ----
 
 
