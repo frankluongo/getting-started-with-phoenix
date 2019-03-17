@@ -698,7 +698,20 @@ observeChannel () {
 ## 9: Deployment
 
 ### 9.1: Deployment
+
+- Create a Heroku account
+- Add the Heroku CLI
+- Login to Heroku
+- Make sure to track your file with Git
+
 ### 9.2: Creating The Heroku Application
+[Additional help found here](https://hexdocs.pm/phoenix/heroku.html)
+
+Run this command
+```bash
+heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+```
+
 ### 9.3: Configuring The Application
 
 ----
