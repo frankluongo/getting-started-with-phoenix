@@ -662,6 +662,8 @@ Add an element that will provide an event id to the Javascript in `event/details
 
 ### 8.5: Consuming a Message
 
+**NOTE:** DO NOT PUT A SPACE BETWEEN "event:" and "#{event.id}"
+
 Create a new function in your `event_channel.ex` file for sending the update
 ```elixir
 def send_update(event) do
