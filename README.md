@@ -602,7 +602,64 @@ end
 
 
 ### 8.3: Preparing For Channels
+In this module, he uses bower to add jQuery as a dependency to brunch, however, the newest version of Phoenix is utilizing Webpack so none of this is very relevant.
+
+
 ### 8.4: Creating a Channel
+Add a new channel to your `user_socket.ex` file
+```elixir
+channel "event:*", RsvpWebWeb.EventChannel
+```
+
+Create that channel (here it's `event_channel.ex`) in the `channels` folder
+```elixir
+defmodule RsvpWebWeb.EventChannel do
+  use Phoenix.Channel
+
+  def join("event:" <> event_id, _message, socket) when event_id <= 0 do
+    {:error, %{reason: "Invalid Event ID"}}
+  end
+
+  def join("event:" <> event_id, _message, socket) do
+    {:ok, socket}
+  end
+end
+```
+
+Create a JavaScript file for interacting with the channel. I've created one in `js/modules/event.js`
+```javascript
+import socket from "../socket";
+
+export default class Event {
+  constructor () {
+    let idElem = document.querySelector('#id');
+    if (!idElem) { return; }
+    this.id = idElem.getAttribute('data-id');
+    this.build();
+  }
+
+  build () {
+    this.createChannel();
+    this.joinChannel();
+  }
+
+  createChannel () {
+    this.channel = socket.channel(`event:${this.id}`, {});
+  }
+
+  joinChannel () {
+    this.channel.join()
+    .receive("ok", resp => { console.log(`Joined successfully event: ${this.id}`, resp) })
+    .receive("error", resp => { console.log(`Unable to join`, resp) });
+  }
+}
+```
+
+Add an element that will provide an event id to the Javascript in `event/details.html.eex`
+```eex
+<span id="id" data-id="<%= @event.id %>"></span>
+```
+
 ### 8.5: Consuming a Message
 
 ----

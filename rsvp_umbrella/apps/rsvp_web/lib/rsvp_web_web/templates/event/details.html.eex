@@ -17,3 +17,5 @@
 <% end %>
 
 <%= link("Create New Event", to: Routes.event_path(@conn, :create)) %>
+
+<span id="id" data-id="<%= @event.id %>"></span>
