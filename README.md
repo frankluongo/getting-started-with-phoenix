@@ -707,9 +707,54 @@ observeChannel () {
 ### 9.2: Creating The Heroku Application
 [Additional help found here](https://hexdocs.pm/phoenix/heroku.html)
 
-Run this command
+[Download the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
+Run these command / Add These Buildpacks to your site
 ```bash
 heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+heroku buildpacks:add https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
+```
+
+Create a file named `phoenix_static_buildpack.config` and add these lines to set the path for your app and set up a compile file
+```
+phoenix_relative_path=apps/rsvp_web
+compile="compile"
+```
+
+Create a file named `compile` and add these lines to run scripts that will start the app
+```
+npm run deploy
+cd $phoenix_dir
+mix "${phoenix_ex}.digest"
+```
+
+Add these lines to the `config/prod.exs` file:
+- Load the secret key from Heroku
+- Connect to the right database
+- Bind to Heroku's Dyno Networking by setting the `http` port
+- Set the `url` to your Heroku App's URL (you can also change the host to be a custom domain)
+```elixir
+config :hello, HelloWeb.Endpoint,
+  http: [port: System.get_env("PORT")],
+  url: [scheme: "https", host: "mysterious-meadow-6277.herokuapp.com", port: 443], force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
+
+config :hello, Hello.Repo,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  ssl: true
+```
+**NOTE:** Make sure to comment out/remove the `import_config "prod.secret.exs"` line at the end of this file
+
+Decrease WebSocket Transport Timeout in `endpoint.ex`
+```elixir
+websocket: [timeout: 45_000],
+```
+
+Create a `Procfile` and add this line
+```
+web: MIX_ENV=prod elixir --sname server -S mix phx.server
 ```
 
 ### 9.3: Configuring The Application
