@@ -718,6 +718,7 @@ heroku buildpacks:add https://github.com/gjaldon/heroku-buildpack-phoenix-static
 
 ### 9.3: Configuring The Application
 
+#### Telling Heroku Where to Look & What To Do
 Create a file named `phoenix_static_buildpack.config` and add these lines to set the path for your app and set up a compile file
 ```
 phoenix_relative_path=apps/rsvp_web
@@ -777,8 +778,46 @@ config :rsvp, Rsvp.Repo,
 use Mix.Config
 ```
 
-`config.exs` should be updated to look like this
+`config.exs` should have this line at the bottom
+```elixir
+import_config "#{Mix.env}.exs"
+```
 
+#### Creating Your Production Database
+Run this command to create the database
+```
+heroku addons:create heroku-postgresql:hobby-dev
+```
+
+Set it's Pool Size so you don't overdo the resources
+```
+heroku config:set POOL_SIZE=18
+```
+
+**NOTE:** When running tasks, you'll want to limit pool sizes so you don't use all your resources
+```
+heroku run "POOL_SIZE=2 mix hello.task"
+```
+
+#### Fine, Keep Your Secrets
+Generate a secret key for your application to use in Heroku
+```
+mix phx.gen.secret
+```
+
+Add this key to Heroku
+```
+heroku config:set SECRET_KEY_BASE="YOUR_SECRET_KEY"
+```
+
+#### Commit and Deploy!
+I have this repo tracked in Github so whenever I push to master, it deploys
+
+#### Migrate That Repo
+After the app is built, run this command
+```bash
+heroku run "POOL_SIZE=2 mix ecto.migrate -r Rsvp.Repo" --app your-app-name
+```
 
 
 ----
