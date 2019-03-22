@@ -715,6 +715,9 @@ heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.g
 heroku buildpacks:add https://github.com/gjaldon/heroku-buildpack-phoenix-static.git
 ```
 
+
+### 9.3: Configuring The Application
+
 Create a file named `phoenix_static_buildpack.config` and add these lines to set the path for your app and set up a compile file
 ```
 phoenix_relative_path=apps/rsvp_web
@@ -757,7 +760,26 @@ Create a `Procfile` and add this line
 web: MIX_ENV=prod elixir --sname server -S mix phx.server
 ```
 
-### 9.3: Configuring The Application
+Connect to the correct database by creating `prod.exs` and `dev.exs` files in `rsvp/config`
+
+`prod.exs` should look like this:
+```elixir
+use Mix.Config
+
+config :rsvp, Rsvp.Repo,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  ssl: true
+```
+
+`dev.exs` should look like this
+```elixir
+use Mix.Config
+```
+
+`config.exs` should be updated to look like this
+
+
 
 ----
 
